@@ -1,0 +1,62 @@
+    - name: Create Two Groups, DBA and RedesAdmin
+      community.aws.iam_group:
+        name: "{{ item }}"
+        state: present
+
+      loop:
+        - DBA
+        - RedesAdmin
+        - CloudAdmin
+        - LinuxAdmin
+        - Estagiarios
+      register: new_groups
+#
+    - name: Create the group DBA  and attach a managed policy using its ARN
+      community.aws.iam_group:
+        name: DBA
+        managed_policies:
+         - arn:aws:iam::aws:policy/AmazonRDSFullAccess
+         - arn:aws:iam::206683515304:policy/EnforceMFAPolicy
+        users:
+         - adolfo.carlos
+        state: present
+
+    - name: Create the group RedesAdmin  and attach a managed policy using its ARN
+      community.aws.iam_group:
+        name: RedesAdmin
+        managed_policies:
+         - arn:aws:iam::aws:policy/AmazonVPCFullAccess
+         - arn:aws:iam::206683515304:policy/EnforceMFAPolicy
+        users:
+         - aguinaldo.balsemao
+        state: present
+
+    - name: Create the group CloudAdmin  and attach a managed policy using its ARN
+      community.aws.iam_group:
+        name: CloudAdmin
+        managed_policies:
+         - arn:aws:iam::aws:policy/AdministratorAccess
+         - arn:aws:iam::206683515304:policy/EnforceMFAPolicy
+        users:
+         - alda.lage
+        state: present
+
+    - name: Create the group LinuxAdmin  and attach a managed policy using its ARN
+      community.aws.iam_group:
+        name: LinuxAdmin
+        managed_policies:
+         - arn:aws:iam::aws:policy/AmazonEC2FullAccess
+         - arn:aws:iam::206683515304:policy/EnforceMFAPolicy
+        users:
+         - amelia.penteado
+        state: present
+
+    - name: Create the group Estagiarios  and attach a managed policy using its ARN
+      community.aws.iam_group:
+        name: Estagiarios
+        managed_policies:
+         - arn:aws:iam::aws:policy/ReadOnlyAccess
+         - arn:aws:iam::206683515304:policy/EnforceMFAPolicy
+        users:
+         - gustavo.lima
+        state: present

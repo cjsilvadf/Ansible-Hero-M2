@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+  - name: Cria Usuários no IAM AWS
+    import_role:
+     name: cria_usuarios
+
+  - name: Cria Grupos no IAM, aplica politica e adicionar usuarios aos grupos
+    import_role:
+     name: cria_grupos
+

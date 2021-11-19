@@ -1,0 +1,23 @@
+    - name: Ler o arquivo csv
+      read_csv:
+        path: username3.csv
+        delimiter: ";"
+      delegate_to: localhost
+      register: user_list
+      
+    - name: display user_list data
+      debug:
+       msg: "{{ user_list.list }}"
+
+    - name: print dictinaries
+      debug:
+       msg: "{{ item.usuarios }}"
+      loop: "{{ user_list.list }}"
+
+    - name: criando usuarios do arquivo csv
+      community.aws.iam_user:
+       state: present
+       name: "{{ item.usuarios }}"
+      loop: "{{ user_list.list }}"
+          
+      

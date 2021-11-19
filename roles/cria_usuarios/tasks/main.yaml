@@ -13,7 +13,7 @@
       debug:
        msg: "{{ item.usuarios }}"
       loop: "{{ user_list.list }}"
-
+    
     - name: criando usuarios do arquivo csv
       community.aws.iam_user:
        state: present
